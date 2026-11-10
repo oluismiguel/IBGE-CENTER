@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:IbgeCenter.Views"
+       x:Class="IbgeCenter.AppShell"
+       Title="IBGE Center">
+    <ShellContent Title="IBGE Center"
+                  ContentTemplate="{DataTemplate views:MainPage}"
+                  Route="main" />
+</Shell>

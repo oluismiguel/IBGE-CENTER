@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:IbgeCenter.Models"
+             xmlns:vm="clr-namespace:IbgeCenter.ViewModels"
+             x:Class="IbgeCenter.Views.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="IBGE Center">
+
+    <ContentPage.Resources>
+        <DataTemplate x:Key="NomeTemplate" x:DataType="models:NomeFrequencia">
+            <Grid ColumnDefinitions="48,*,Auto" Padding="0,4" ColumnSpacing="8">
+                <Label Text="{Binding RankingText}" FontAttributes="Bold" VerticalOptions="Center" />
+                <Label Grid.Column="1" Text="{Binding Nome}" FontSize="16" VerticalOptions="Center" />
+                <Label Grid.Column="2" Text="{Binding FrequenciaText}" FontSize="12" VerticalOptions="Center" />
+            </Grid>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="12">
+
+            <Label Text="Nomes mais comuns do Brasil" FontSize="22" FontAttributes="Bold" />
+            <Label Text="Dados do Censo 2022 (IBGE). Escolha um estado ou município." FontSize="13" />
+
+            <Label Text="Tipo de localidade" FontAttributes="Bold" />
+            <Picker Title="Estado ou município"
+                    ItemsSource="{Binding Tipos}"
+                    SelectedItem="{Binding TipoSelecionado}" />
+
+            <Entry Placeholder="Filtrar município pelo nome..."
+                   IsVisible="{Binding IsMunicipio}"
+                   Text="{Binding TextoBusca}" />
+
+            <Label Text="Localidade" FontAttributes="Bold" />
+            <Picker Title="Selecione a localidade"
+                    ItemsSource="{Binding Localidades}"
+                    ItemDisplayBinding="{Binding DisplayName, x:DataType=models:Localidade}"
+                    SelectedItem="{Binding LocalidadeSelecionada}" />
+
+            <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" />
+            <Label Text="{Binding Status}" IsVisible="{Binding TemStatus}" FontSize="13" />
+
+            <Label Text="{Binding TituloResultado}" FontSize="18" FontAttributes="Bold"
+                   IsVisible="{Binding TemResultado}" />
+
+            <Border IsVisible="{Binding TemHomens}" Stroke="Gray" StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10" Padding="12">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="👨 Nomes masculinos" FontSize="16" FontAttributes="Bold" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Homens}"
+                                         BindableLayout.ItemTemplate="{StaticResource NomeTemplate}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border IsVisible="{Binding TemMulheres}" Stroke="Gray" StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10" Padding="12">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="👩 Nomes femininos" FontSize="16" FontAttributes="Bold" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Mulheres}"
+                                         BindableLayout.ItemTemplate="{StaticResource NomeTemplate}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border IsVisible="{Binding TemGerais}" Stroke="Gray" StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10" Padding="12">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="👥 Nomes mais comuns" FontSize="16" FontAttributes="Bold" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Gerais}"
+                                         BindableLayout.ItemTemplate="{StaticResource NomeTemplate}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <Border IsVisible="{Binding TemSobrenomes}" Stroke="Gray" StrokeThickness="1"
+                    StrokeShape="RoundRectangle 10" Padding="12">
+                <VerticalStackLayout Spacing="4">
+                    <Label Text="👪 Sobrenomes mais comuns" FontSize="16" FontAttributes="Bold" />
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Sobrenomes}"
+                                         BindableLayout.ItemTemplate="{StaticResource NomeTemplate}" />
+                </VerticalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
